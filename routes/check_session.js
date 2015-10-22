@@ -6,7 +6,7 @@ module.exports = function(req , res, next) {
   if(passport.session && passport.session.id) {
     next();
   } else {
-    console.log("セッションチェックに失敗したようです。");
+    console.log("ログインしていませんでした．");
     res.send('ng');
   }
 }

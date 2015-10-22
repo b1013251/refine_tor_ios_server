@@ -20,7 +20,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new TwitterStrategy({
     consumerKey    : settings.CONSUMER_KEY,
     consumerSecret : settings.CONSUMER_SECRET,
-    callbackURL    : "http://192.168.11.35:" + settings.PORT + "/callback"
+    callbackURL    : settings.HOST + "/callback"
   },
   function(token , tokenSecret , profile , done) {
       //認証完了時にデータベースに保存

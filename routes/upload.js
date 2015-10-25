@@ -9,11 +9,22 @@ var settings   = require('../settings.js');
 
 
 /*------------------------------------------------
+  各種定数
+-------------------------------------------------*/
+var mimeTypes = {
+  "video/mpeg":".mp4",
+  "image/jpeg":".jpg",
+  "image/png":".png",
+  "image/vnd.microsoft.icon":".ico",
+  "video/mp4":".mp4",
+};
+
+/*------------------------------------------------
   画像・動画のアップロードを受け入れる
 -------------------------------------------------*/
 module.exports = function (req , res ) {
 
-  console.dir(req);
+  console.dir(req.user);
 
   //フォーム関係変数
   var form   = new formidable.IncomingForm();
@@ -46,15 +57,15 @@ module.exports = function (req , res ) {
            fields.push([field, value]);
          })
          .on('file', function(field, file) {
-           fs.rename(file.path , file.path + ".jpg" , function(err) {
+           fs.rename(file.path , file.path + mimeTypes[file.type] , function(err) {
              if(err) {
-               fs.unlink(file.path + ".jpg");
-               fs.rename(file.path , file.path + ".jpg");
+               fs.unlink(file.path + mimeTypes[file.type]);
+               fs.rename(file.path , file.path + mimeTypes[file.type]);
              }
            });
 
            files.push([field, file]);
-           file_path = file.path + ".jpg"
+           file_path = file.path + mimeTypes[file.type];
          })
          .on('end', function() {
            //データベースに追加

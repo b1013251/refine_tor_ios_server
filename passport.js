@@ -27,10 +27,13 @@ passport.use(new TwitterStrategy({
       var connection;
       var user_exist;
 
+      console.dir(profile);
+
       async.series([
         function(callback) {
           connection = require('./helper/db_helper').connection();
-          passport.session.id = profile.id
+          passport.session.id   = profile.id;
+          passport.session.user = profile.username;
           callback(null);
         },
         //ユーザ既に存在しているか

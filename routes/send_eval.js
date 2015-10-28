@@ -32,8 +32,7 @@ module.exports = function(req , res) {
 -------------------------------------------------*/
 function insert_eval(post_id, user_id) {
   var connection;
-  var exist_error = false;
-  var exist_eval  = false; //すでに評価してたらtrue
+  var exist_error = false; //エラーが発生しているか
 
   async.waterfall([
     // コネクション確立
@@ -46,22 +45,27 @@ function insert_eval(post_id, user_id) {
         post_id, user_id
       ];
       var place = 'select * from Eval where post_id = ? and twitter_id = ?';
-      var query = connection.query(place, eval_array, function(err,result){
-        if(err != null) {
-          console.log("評価追加中，評価チェック中エラーが発生しました。");
-          exist_error = true;
-        } else if(result.length != 0){
-          console.log("評価はすでにされている");
-          console.dir(result);
-          exist_eval = true;
-        } else {
-          console.log("評価されていなかった");
-        }
-      })
-      callback(null, exist_eval);
+
+      var exist_eval = true;
+        var query = connection.query(place, eval_array, function(err,result){
+          if(err != null) {
+            console.log("評価追加中，評価チェック中エラーが発生しました。");
+            exist_error = true;
+          } else if(result.length != 0){
+            console.log("評価はすでにされている");
+            console.dir(result);
+            exist_eval = true;
+            callback(null, exist_eval);
+          } else {
+            console.log("評価されていなかった");
+            exist_eval = false;
+            callback(null, exist_eval);
+          }
+        });
     },
     // クエリー文の生成・実行
     function(exist_eval , callback) {
+      console.log(exist_eval);
       var eval = {
         twitter_id : user_id,
         post_id    : parseInt(post_id)

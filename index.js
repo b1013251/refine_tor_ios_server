@@ -73,6 +73,8 @@ app.get ('/user_info'  , routes.check_session, routes.user_info);
 
 // ユーザ認証不要
 app.get ('/get_eval'   , routes.get_eval);
+app.get ('/past_image' , routes.past_image);
+
 
 /*------------------------------------------------
   　サーバをリスン状態に

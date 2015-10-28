@@ -10,6 +10,7 @@ module.exports = {
   get_eval      : require('./get_eval'),       //評価情報取得
   send_eval     : require('./send_eval'),      //評価情報更新
   check_user    : require('./check_user'),     //初回のログインチェック
+  past_image    : require('./past_image'),
 
   check_session : require('./check_session')   //セッションチェック
 };

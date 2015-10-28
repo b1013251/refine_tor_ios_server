@@ -6,7 +6,7 @@ var fs         = require('fs');
 var async      = require('async');
 var mysql      = require('mysql');
 var settings   = require('../settings.js');
-
+var easyimg    = require('easyimage');
 
 /*------------------------------------------------
   各種定数
@@ -61,8 +61,20 @@ module.exports = function (req , res ) {
              if(err) {
                fs.unlink(file.path + mimeTypes[file.type]);
                fs.rename(file.path , file.path + mimeTypes[file.type]);
-             }
+              }
            });
+
+           console.log(file.type);
+           if ( file.type == "image/jpeg") {
+             easyimg.resize({
+                  src: file.path + mimeTypes[file.type],
+                  dst: file.path + "_thumb" + mimeTypes[file.type],
+                  width:800
+             }, function(err, image) {
+                  if (err) throw err;
+                  console.log('Resized ' + image.width + ' x ' + image.height);
+             });
+           }
 
            files.push([field, file]);
            file_path = file.path + mimeTypes[file.type];

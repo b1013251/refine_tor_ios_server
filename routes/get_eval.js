@@ -15,7 +15,7 @@ module.exports = function(req , res) {
 
   async.series([
    function(callback) {
-      select_eval(res, post_id)
+      select_eval(req,res, post_id)
       callback(null);
    }],
    function() {
@@ -25,15 +25,16 @@ module.exports = function(req , res) {
 /*------------------------------------------------
   　テーブルから評価数を取り出す
 -------------------------------------------------*/
-function select_eval(res, post_id) {
+function select_eval(req, res, post_id) {
   var connection = require('../helper/db_helper').connection();
 
-  var place = 'select count(*) as count from Eval where post_id = ?';
-  var query = connection.query(place, parseInt(post_id));
   var count = 0;
+  var eval = "false"; //自分が評価したか
 
   async.series([
     function(callback){
+      var place = 'select count(*) as count from Eval where post_id = ?';
+      var query = connection.query(place, parseInt(post_id));
       query
         .on('error' , function(err) {
           console.log(err);
@@ -49,11 +50,39 @@ function select_eval(res, post_id) {
         .on('end' , function() {
           callback(null);
         });
+    },function(callback){
+      console.log(req.user);
+      var eval_array = [
+        post_id, req.user
+      ];
+
+      var place = 'select * from Eval where post_id = ? and twitter_id = ?';
+      var query = connection.query(place, eval_array);
+
+      query
+        .on('error' , function(err) {
+          console.log(err);
+          console.log("評価データ取り出し中にエラー（ユーザ情報）");
+        })
+        .on('result' , function(rows) {
+          if(rows != null) {
+            console.dir(rows);
+            if(rows.length != 0) {
+              eval = "true";
+            } else {
+              eval = "false";
+            }
+          } else {
+          }
+        })
+        .on('end' , function() {
+          callback(null);
+        });
     }], function() {
       console.log(count);
       res.send({
         count : String(count),
-        eval  : "true" //TODO: 投稿したかを文字列として与える
+        eval  : eval
       });
     });
 }

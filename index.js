@@ -70,9 +70,9 @@ app.post('/upload'     , routes.check_session, routes.upload);
 app.post('/send_eval'  , routes.check_session, routes.send_eval);
 app.get ('/check_user' , routes.check_session, routes.check_user);
 app.get ('/user_info'  , routes.check_session, routes.user_info);
+app.get ('/get_eval'   , routes.check_session, routes.get_eval);
 
 // ユーザ認証不要
-app.get ('/get_eval'   , routes.get_eval);
 app.get ('/past_image' , routes.past_image);
 
 

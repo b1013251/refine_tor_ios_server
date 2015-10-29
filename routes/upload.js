@@ -50,6 +50,11 @@ module.exports = function (req , res ) {
              latitude = value;
            }
 
+           if(field == "altitude") {
+             console.log("altitude: " + value)
+             altitude = value;
+           }
+
            if(field == "longitude") {
              console.log("longitude: " + value)
              longitude = value;

@@ -119,7 +119,7 @@ function insert_post(post_data) {
     },
     // クエリー文の生成・実行
     function(callback) {
-      var place      = 'insert into Post set ?';
+      var place      = 'insert into Post_ios set ?';
       var query      = connection.query(place, post_data, function(err, result){
         if(err != null) {
           console.log("感想投稿中，データの挿入に失敗しました。");

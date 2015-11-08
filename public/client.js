@@ -1,6 +1,6 @@
 $(document).ready(function() {
   //websocket部分
-  var socket = io.connect("http://localhost:3030");
+  var socket = io.connect("http://localhost:3000");
 
   //バブルプール
   var bubblePool = []

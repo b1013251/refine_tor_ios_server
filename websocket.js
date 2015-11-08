@@ -13,11 +13,10 @@ var locationHelper = require('./helper/location_helper.js');
 /*------------------------------------------------
   　初期化（サーバの挙動を定義し，リスン状態に）
 -------------------------------------------------*/
-var init = function(){
-  var websocketServer = http.createServer();
+var init = function(app){
   var user = [];
 
-  io = socketIO.listen(websocketServer);
+  io = socketIO.listen(app);
   io.sockets.on("connection" , function(socket) {
     console.log("connected");
 
@@ -41,15 +40,12 @@ var init = function(){
       emit_bubble(socket.id , location);
     });
   });
-
-  //サーバ起動
-  websocketServer.listen(settings.WEBSOCKET_PORT , '0.0.0.0');
-}
+};
 
 function emit_bubble(id, location) {
   var count = 0;
   var connection = require('./helper/db_helper').connection();
-  var query = connection.query('select * from Post');
+  var query = connection.query('select * from Post_ios');
   query
   .on('error', function(err){
     console.log(err);

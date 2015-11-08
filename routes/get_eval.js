@@ -33,7 +33,7 @@ function select_eval(req, res, post_id) {
 
   async.series([
     function(callback){
-      var place = 'select count(*) as count from Eval where post_id = ?';
+      var place = 'select count(*) as count from Eval_ios where post_id = ?';
       var query = connection.query(place, parseInt(post_id));
       query
         .on('error' , function(err) {
@@ -56,7 +56,7 @@ function select_eval(req, res, post_id) {
         post_id, req.user
       ];
 
-      var place = 'select * from Eval where post_id = ? and twitter_id = ?';
+      var place = 'select * from Eval_ios where post_id = ? and twitter_id = ?';
       var query = connection.query(place, eval_array);
 
       query

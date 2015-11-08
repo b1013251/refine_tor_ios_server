@@ -23,6 +23,7 @@ var routes     = require('./routes');
   　HTTPサーバ設定
 -------------------------------------------------*/
 var app = express();
+var server = http.createServer(app);
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/tmp')   ); //とりあえず
 app.use(bodyParser());
@@ -75,15 +76,13 @@ app.get ('/get_eval'   , routes.check_session, routes.get_eval);
 // ユーザ認証不要
 app.get ('/past_image' , routes.past_image);
 
-
-/*------------------------------------------------
-  　サーバをリスン状態に
--------------------------------------------------*/
-app.listen(settings.PORT , '0.0.0.0');
-
-
 /*------------------------------------------------
   　WebSocketサーバをリスン状態に
 -------------------------------------------------*/
 var websocket = require('./websocket.js');
-websocket.init();
+websocket.init(server);
+
+/*------------------------------------------------
+  　サーバをリスン状態に
+-------------------------------------------------*/
+server.listen(settings.PORT , '0.0.0.0');

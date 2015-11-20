@@ -31,7 +31,7 @@ function select_user(user_id) {
     },
     // クエリー文の生成・実行
     function(callback) {
-      var place      = 'select * from User_ios where cookie = ?';
+      var place      = 'select * from User where cookie = ?';
       var query      = connection.query(place, user_id, function(err, result){
         if(err != null) {
           console.log("ユーザ情報取得中にエラーが発生しました。");

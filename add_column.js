@@ -5,6 +5,7 @@
 */
 var mysql   = require("mysql");
 
+
 var connection = mysql.createConnection({
   host     : 'localhost' ,
   user     : 'node' ,
@@ -41,8 +42,8 @@ function toOrdinal(num) {
 /* ---------------------------
  *          データ準備
  * --------------------------- */
-var oriLat = 41.842022;
-var oriLon = 140.766769;
+var oriLat = 41.785115711;
+var oriLon = 140.77203101;
 var oriAlt = 0.0;
 
 var lat = [];
@@ -50,7 +51,7 @@ var lon = [];
 var alt = [];
 var str = [];
 
-for (var i = 0 ; i < 100 ; i++) {
+for (var i = 0 ; i < 2 ; i++) {
 	lat[i] = oriLat + (Math.random() - 0.5) * 0.1;
 	lon[i] = oriLon + (Math.random() - 0.5) * 0.1;
 	alt[i] = oriAlt + (Math.random() ) * 50.0;
@@ -71,24 +72,23 @@ connection.connect(function(err) {
   }
 })
 
-for(var i = 0 ; i < 100 ; i ++ ) {
+for(var i = 0 ; i < 2 ; i ++ ) {
+    var jsonData = {
+      latitude : lat[i]  ,
+      longitude : lon[i] ,
+      altitude : alt[i]  ,
+      message : str[i]   ,
+      file_path : "/sample.jpg",
+      user_id    : 1
+    };
+    var query = 'insert into Post set ?';
 
-  var jsonData = {
-    latitude : lat[i]  ,
-    longitude : lon[i] ,
-    altitude : alt[i]  ,
-    message : str[i]   ,
-    file_path : "/sample.jpg",
-    user_id    : 1
-  };
-  var query = 'insert into Post set ?';
-
-  var realQuery = connection.query(query , jsonData , function(err, result) {
-    if(err != null) {
-       console.log("Error");
-    }
-  });
-  console.log(realQuery);
+    var realQuery = connection.query(query , jsonData , function(err, result) {
+      if(err != null) {
+         console.log("Error");
+      }
+    });
+    console.log(realQuery);
 }
 
 

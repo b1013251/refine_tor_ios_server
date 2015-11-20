@@ -44,7 +44,7 @@ function insert_eval(post_id, user_id) {
       var eval_array = [
         post_id, user_id
       ];
-      var place = 'select * from Eval_ios where post_id = ? and twitter_id = ?';
+      var place = 'select * from Eval where post_id = ? and twitter_id = ?';
 
       var exist_eval = true;
         var query = connection.query(place, eval_array, function(err,result){
@@ -70,7 +70,7 @@ function insert_eval(post_id, user_id) {
         twitter_id : user_id,
         post_id    : parseInt(post_id)
       };
-      var place      = 'insert into Eval_ios set ?';
+      var place      = 'insert into Eval set ?';
 
       if(!exist_eval) {
         connection.query(place, eval, function(err, result){

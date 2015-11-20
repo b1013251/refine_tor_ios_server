@@ -73,8 +73,8 @@ module.exports = function (req , res ) {
            if ( file.type == "image/jpeg") {
              easyimg.resize({
                   src: file.path + mimeTypes[file.type],
-                  dst: file.path + "_thumb" + mimeTypes[file.type],
-                  width:800
+                  dst: file.path + mimeTypes[file.type] +  ".thumb.jpg",
+                  width:400
              }, function(err, image) {
                   if (err) throw err;
                   console.log('Resized ' + image.width + ' x ' + image.height);
@@ -119,7 +119,7 @@ function insert_post(post_data) {
     },
     // クエリー文の生成・実行
     function(callback) {
-      var place      = 'insert into Post_ios set ?';
+      var place      = 'insert into Post set ?';
       var query      = connection.query(place, post_data, function(err, result){
         if(err != null) {
           console.log("感想投稿中，データの挿入に失敗しました。");

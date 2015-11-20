@@ -41,8 +41,8 @@ function toOrdinal(num) {
 /* ---------------------------
  *          データ準備
  * --------------------------- */
-var oriLat = 41.78521;
-var oriLon = 140.77230;
+var oriLat = 41.842022;
+var oriLon = 140.766769;
 var oriAlt = 0.0;
 
 var lat = [];
@@ -78,7 +78,7 @@ for(var i = 0 ; i < 100 ; i ++ ) {
     longitude : lon[i] ,
     altitude : alt[i]  ,
     message : str[i]   ,
-    file_path : "http://stat001.ameba.jp/user_images/20120524/15/wazameba/b1/9b/j/o0800080011990667484.jpg",
+    file_path : "/sample.jpg",
     user_id    : 1
   };
   var query = 'insert into Post set ?';

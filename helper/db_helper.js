@@ -20,7 +20,8 @@ exports.connection = function() {
         host     : 'localhost' ,
         user     : 'node' ,
         password : 'secret' ,
-        database : 'node'
+        database : 'node',
+        dateStrings: true 
       });
       callback(null);
     },

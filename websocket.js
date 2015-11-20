@@ -45,7 +45,7 @@ var init = function(app){
 function emit_bubble(id, location) {
   var count = 0;
   var connection = require('./helper/db_helper').connection();
-  var query = connection.query('select * from Post_ios');
+  var query = connection.query('select * from Post');
   query
   .on('error', function(err){
     console.log(err);
